@@ -13,45 +13,20 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 //Routes
-app.get("/", (req, res) => {
-  console.log("hola");
-  res.json({ user: "Diego", email: "perro@loco.com" });
-});
-app.get("/movies", (req, res) => {
-  res.status(200).json([
-    {id:1,
-      titulo: "Peli1",
-      director: "Fulano",
-      pais: "lugar",
-      año: 2020,
-      rating: 5,
-      fecha: "23/10/2020",
-    },
-    {id:2,
-      titulo: "Peli1",
-      director: "Fulano",
-      pais: "lugar",
-      año: 2020,
-      rating: 5,
-      fecha: "23/10/2020",
-    },
-    {id:3,
-      titulo: "Peli1",
-      director: "Fulano",
-      pais: "lugar",
-      año: 2020,
-      rating: 5,
-      fecha: "23/10/2020",
-    },
-  ]);
-});
+
+const apiRouter = require("./routes/api");
+app.use("/api", apiRouter);
+// View Engine to convert views into html
+// app.set("view engine","ejs") you need a folder views
+//MIDDLEWARES
+//you can use also express.json() as middleware to parse json in the boyd
+
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(
-    `Server is running on port ${
-      PORT === 3000 ? "http://localhost:3000" : PORT
-    }`
+    `Server is running on port http://localhost:${PORT}`
   );
 });
