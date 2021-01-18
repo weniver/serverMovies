@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -10,23 +11,24 @@ var corsOptions = {
   origin: "http://localhost:3001",
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
+
+// Serve static files
+app.use(
+  express.static(path.join("..", __dirname, "client-react-peliculas", "build"))
+);
 
 //Routes
-
 const apiRouter = require("./routes/api");
 app.use("/api", apiRouter);
-// View Engine to convert views into html
-// app.set("view engine","ejs") you need a folder views
-//MIDDLEWARES
-//you can use also express.json() as middleware to parse json in the boyd
 
-
+// Redirect back to index.html if urls do not match
+app.get("*", (req, res) => {
+  res.sendFile(path.join("..", __dirname, "client-react-peliculas/build", "index.html"));
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(
-    `Server is running on port http://localhost:${PORT}`
-  );
+  console.log(`Server is running on port http://localhost:${PORT}`);
 });
