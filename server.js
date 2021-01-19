@@ -15,7 +15,7 @@ app.use(cors());
 
 // Serve static files
 app.use(
-  express.static(path.join("..", __dirname, "client-react-peliculas", "build"))
+  express.static(path.join("..", __dirname, "clientMovies", "build"))
 );
 
 //Routes
@@ -24,7 +24,7 @@ app.use("/api", apiRouter);
 
 // Redirect back to index.html if urls do not match
 app.get("*", (req, res) => {
-  res.sendFile(path.join("..", __dirname, "client-react-peliculas/build", "index.html"));
+  res.sendFile(path.join("..", __dirname, "clientMovies/build", "index.html"));
 });
 
 // set port, listen for requests
