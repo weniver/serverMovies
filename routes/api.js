@@ -1,42 +1,29 @@
 const express = require("express");
 const router = express.Router();
+const Movie = require("../models/Movie");
 
 router.get("/", (req, res) => {
   res.json({ user: "Diego", email: "perro@loco.com" });
 });
-router.get("/movies", (req, res) => {
-  res.status(200).json([
-    {
-      id: 1,
-      title: "Pelicula sin nombre",
-      director: "Diego Bailador",
-      country: "JAPON",
-      year: 2020,
-      rating: 3,
-      poster:"https://m.media-amazon.com/images/M/MV5BZWFkN2ZhODAtYTNkZS00Y2NjLWIzNDYtNzJjNDNlMzAyNTIyXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_SX300.jpg",
-      fecha: new Date(),
-    },
-    {
-      id: 2,
-      title: "Pelicula sin nombre",
-      director: "Diego Bailador",
-      country: "USA",
-      year: 1986,
-      rating: 0,
-      poster:"https://m.media-amazon.com/images/M/MV5BZWFkN2ZhODAtYTNkZS00Y2NjLWIzNDYtNzJjNDNlMzAyNTIyXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_SX300.jpg",
-      fecha: new Date(),
-    },
-    {
-      id: 3,
-      title: "Pelicula sin nombre",
-      director: "Diego Bailador",
-      country: "lugar",
-      year: 1999,
-      rating: 1,
-      poster:"https://m.media-amazon.com/images/M/MV5BZWFkN2ZhODAtYTNkZS00Y2NjLWIzNDYtNzJjNDNlMzAyNTIyXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_SX300.jpg",
-      fecha: new Date(),
-    },
-  ]);
+
+router.post("/add/movie", async (req, res) => {
+  try {
+    const movie = new Movie(req.body);
+    const savedMovie = await movie.save();
+    res.status(200).send("vengo del server signup");
+  } catch (e) {
+    console.log(e);
+    res.send("error");
+  }
+});
+router.get("/movies", async (req, res) => {
+  try {
+    const allMovies = await Movie.find();
+    res.json(allMovies);
+  } catch (e) {
+    console.log(e);
+    res.send("error");
+  }
 });
 
 module.exports = router;
