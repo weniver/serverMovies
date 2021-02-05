@@ -45,15 +45,12 @@ router.get("/movie/:id", getMovie, (req, res) => {
 });
 
 router.delete("/movie/:id", async (req, res) => {
-try {
-  Post.deleteOne({ _id: req.params.postId })
-} catch (e) {
-
-} finally {
-
-}
+  try {
+    let deleteMovie = await Movie.deleteOne({ _id: req.params.id });
+    res.status(200).json(deleteMovie);
+  } catch (e) {
+    res.status(500).json({ message: e.toString() });
+  }
 });
-
-
 
 module.exports = router;
