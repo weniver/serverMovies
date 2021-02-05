@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
+var methodOverride = require('method-override')
+
 
 const app = express();
 
@@ -18,6 +20,7 @@ app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 // app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(methodOverride('_method'))
 
 // Serve static files
 app.use(
