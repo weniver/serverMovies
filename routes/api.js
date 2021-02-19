@@ -17,10 +17,6 @@ const getMovie = async (req, res, next) => {
   next();
 };
 
-router.get("/", (req, res) => {
-  res.json({ user: "Diego", email: "perro@loco.com" });
-});
-
 router.post("/add/movie", async (req, res) => {
   try {
     const movie = new Movie(req.body);
@@ -33,7 +29,7 @@ router.post("/add/movie", async (req, res) => {
 
 router.get("/movies", async (req, res) => {
   try {
-    const allMovies = await Movie.find();
+    const allMovies = await Movie.find().sort({ watchedOn: "descending" });
     res.json(allMovies);
   } catch (e) {
     res.status(500).json({ message: e.toString() });
