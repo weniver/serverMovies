@@ -53,7 +53,10 @@ router.patch("/movie/:id", async (req, res) => {
   try {
     let updatedMovie = await Movie.findOneAndUpdate(
       { _id: req.params.id },
-      req.body
+      req.body,
+      {
+        new: true,
+      }
     );
     res.status(200).json(updatedMovie);
   } catch (e) {
