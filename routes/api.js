@@ -29,8 +29,9 @@ router.post("/add/movie", async (req, res) => {
 
 router.get("/movies", async (req, res) => {
   try {
-    const allMovies = await Movie.find().sort({ watchedOn: "descending" });
-    res.json(allMovies);
+    const movieData = await Movie.find().sort({ watchedOn: "descending" });
+    const count = await Movie.find().count();
+    res.json({ movieData, count });
   } catch (e) {
     res.status(500).json({ message: e.toString() });
   }
