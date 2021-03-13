@@ -4,8 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
-var methodOverride = require('method-override')
-
+var methodOverride = require("method-override");
 
 const app = express();
 
@@ -20,12 +19,10 @@ app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 // app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"));
 
 // Serve static files
-app.use(
-  express.static(path.join("..", __dirname, "clientMovies", "build"))
-);
+app.use(express.static(path.join("..", __dirname, "clientMovies", "build")));
 
 //Routes
 const apiRouter = require("./routes/api");
@@ -38,9 +35,9 @@ app.get("*", (req, res) => {
 //Conect to database
 mongoose.connect(
   process.env.DB_CONNECTION,
-  { useNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
   (e) => {
-    if(e) console.log(e)
+    if (e) console.log(e);
     console.log("Connected to database");
   }
 );

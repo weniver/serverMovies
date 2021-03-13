@@ -30,7 +30,7 @@ router.post("/add/movie", async (req, res) => {
 router.get("/movies", async (req, res) => {
   try {
     const movieData = await Movie.find().sort({ watchedOn: "descending" });
-    const count = await Movie.find().count();
+    const count = await Movie.find().countDocuments();
     res.json({ movieData, count });
   } catch (e) {
     res.status(500).json({ message: e.toString() });
@@ -52,13 +52,10 @@ router.delete("/movie/:id", async (req, res) => {
 
 router.patch("/movie/:id", async (req, res) => {
   try {
-    let updatedMovie = await Movie.findOneAndUpdate(
-      { _id: req.params.id },
-      req.body,
-      {
-        new: true,
-      }
-    );
+    let updatedMovie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    console.log(updatedMovie);
     res.status(200).json(updatedMovie);
   } catch (e) {
     res.status(500).json({ message: e.toString() });
